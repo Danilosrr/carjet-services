@@ -29,11 +29,11 @@ export default function Home(){
             console.log(error)
         }
     },[])
-      
+    console.log(location)
     return(
         <HomeStyle>
-            <Header/>
             <Map pins={coords} center={location}/>
+            <Header/>
         </HomeStyle>
     )
 }

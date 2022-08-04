@@ -23,7 +23,7 @@ export default function Map(props) {
     console.log(props)
     return isLoaded ? (
         <MapStyle>
-            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14} options={mapOptions}>
+            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12} options={mapOptions}>
                 {pins.map( coord =>{ 
                     return (
                         <Pin name={coord.name} id={coord.id} coord={{lat:coord.lat, lng: coord.lng}} />

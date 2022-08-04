@@ -1,32 +1,39 @@
-import React from "react"
 import styled from "styled-components"
-import logo from '../../assets/img/logo.png';
+import Button from '@mui/material/Button';
+import { IoMdCash } from "react-icons/io";
+import { IoMdHome } from "react-icons/io";
+import { IoMdCalendar } from "react-icons/io";
+import { IoMdPeople } from "react-icons/io";
+import { IoIosCheckboxOutline } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 export default function Header(){
+    const navigate = useNavigate();
+
     return(
-        <HeaderStyle>
-            <img src={logo} alt="logo" />
-        </HeaderStyle>
+        <>
+            <HeaderStyle>
+                <Button fullWidth={true} startIcon={<IoMdHome className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoMdCash className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoMdCalendar className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoMdPeople className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoIosCheckboxOutline className="icon"/>}/>
+            </HeaderStyle>
+        </>
     )
 }
 
 const HeaderStyle = styled.header`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  background-color: rgba(40,44,52,0.80);
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color: white;
+    background-color: rgba(255,255,255,0.95);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
 
-  img{
-    height: 80px;
-    opacity: 0.30;
-  }
-
-  overflow-x: hidden;
+    .icon {
+        font-size: 26px;
+    }
 `
