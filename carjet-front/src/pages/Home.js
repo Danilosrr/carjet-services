@@ -29,7 +29,7 @@ export default function Home(){
             console.log(error)
         }
     },[])
-    console.log(location)
+    
     return(
         <HomeStyle>
             <Map pins={coords} center={location}/>
