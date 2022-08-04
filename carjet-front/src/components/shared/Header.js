@@ -6,20 +6,21 @@ import { IoMdCalendar } from "react-icons/io";
 import { IoMdPeople } from "react-icons/io";
 import { IoIosCheckboxOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { Box, Divider } from "@mui/material";
 
 export default function Header(){
     const navigate = useNavigate();
 
     return(
-        <>
+        <Box>
             <HeaderStyle>
-                <Button fullWidth={true} startIcon={<IoMdHome className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoMdHome className="icon"/>} onClick={()=>{navigate(`/`)}}/>
                 <Button fullWidth={true} startIcon={<IoMdCash className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoMdCalendar className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoMdPeople className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoIosCheckboxOutline className="icon"/>} onClick={()=>{navigate(`/assignments`)}}/>
             </HeaderStyle>
-        </>
+        </Box>
     )
 }
 

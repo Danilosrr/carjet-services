@@ -9,16 +9,13 @@ import {
     Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import styled from 'styled-components';
-import { IoMdHome } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import Header from '../components/shared/Header';
 
 export default function Assignments() {
-    const navigate = useNavigate();
-
     return (
         <>
-            <Accordion sx={{ width: '100%', backgroundColor: '#ffffff', boxShadow: "2px 2px 10px #5c5c5c" }}>
+            <Header/>
+            <Accordion sx={{ width: '100%', backgroundColor: '#ffffff', position:'absolute', top:'65px' }} disableGutters>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>serviços</Typography>
                 </AccordionSummary>
@@ -36,20 +33,6 @@ export default function Assignments() {
                     </List>
                 </AccordionDetails>
             </Accordion>
-            <HomeButton onClick={()=>{navigate('/')}}>
-                <IoMdHome className='icon'/>
-            </HomeButton>
         </>
     );
 }
-
-const HomeButton = styled.button`
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-
-    .icon {
-        color: #000000;
-        font-size: 26px;
-    }
-`
