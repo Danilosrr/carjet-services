@@ -14,7 +14,7 @@ export default function Home(){
 }
 
 const HomeStyle = styled.div`
-  position: "absolute";
+  position: "fixed";
   z-index: 0;
   width: "100%";
   height: "100%";

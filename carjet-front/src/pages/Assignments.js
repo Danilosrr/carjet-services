@@ -1,38 +1,24 @@
 import * as React from 'react';
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    List,
-    ListItem,
-    ListItemText,
+    Box,
+    Divider,
     Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Header from '../components/shared/Header';
+import TaskList from '../components/Table';
 
 export default function Assignments() {
     return (
-        <>
+        <Box sx={{position:'fixed', top:'0', bottom:'0', width:'100%'}}>
             <Header/>
-            <Accordion sx={{ width: '100%', backgroundColor: '#ffffff', position:'absolute', top:'65px' }} disableGutters>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>serviços</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <List sx={{ width: '100%', backgroundColor: '#ffffff' }}>
-                        <ListItem>
-                            <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText primary="Work" secondary="Jan 7, 2014" />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemText primary="Vacation" secondary="July 20, 2014" />
-                        </ListItem>
-                    </List>
-                </AccordionDetails>
-            </Accordion>
-        </>
+            <Box sx={{position:'absolute', width: '100%', top:'65px', bottom:'0'}}>
+                <Divider sx={{width: '100%', color: '#000000'}}/>
+                <Box>
+                    <Typography variant="h5" component="h5" align="center">serviços</Typography>
+                </Box>
+                <Divider sx={{width: '100%', color: '#000000'}}/>
+                <TaskList/>
+            </Box>
+        </Box>
     );
 }
