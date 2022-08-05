@@ -1,8 +1,8 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
+import validToken from "../Middlewares/validateToken.js";
 
-const router = Router();
+const locationRouter = Router();
 
-router.get('/location',)
+locationRouter.get('/location',validToken,(req:Request,res:Response)=>{ res.send('ok') })
 
-
-export default router;
+export default locationRouter;
