@@ -16,3 +16,17 @@ model User {
   password  String
   @@map("users")
 }
+
+model Branch {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  location  Json   
+  @@map("branches") 
+}
+
+model Provider {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  location  Json   
+  @@map("providers") 
+}
