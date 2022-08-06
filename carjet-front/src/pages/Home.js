@@ -14,9 +14,9 @@ export default function Home(){
 }
 
 const HomeStyle = styled.div`
-  position: "fixed";
-  z-index: 0;
-  width: "100%";
-  height: "100%";
-  overflow-x: hidden;
+    position: "fixed";
+    z-index: 0;
+    width: "100%";
+    height: "100%";
+    overflow-x: hidden;
 `
