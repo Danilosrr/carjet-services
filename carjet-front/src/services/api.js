@@ -30,11 +30,17 @@ async function getProviders(token) {
     return baseAPI.get("/location?show=provider", config);
 }
 
+async function sendFile(file,token) {
+    const config = requestConfig(token);
+    return baseAPI.post("/upload",file,config);
+}
+
 const api = {
     signUp,
     signIn,
     getBranches,
-    getProviders
+    getProviders,
+    sendFile
 };
 
 export default api;

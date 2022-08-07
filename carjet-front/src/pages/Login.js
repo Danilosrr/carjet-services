@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import PasswordInput from "../components/shared/passwordInput";
+import PasswordInput from "../components/shared/PasswordInput";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 

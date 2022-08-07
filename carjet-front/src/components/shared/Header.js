@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Button from '@mui/material/Button';
-import { IoMdCash } from "react-icons/io";
+import { RiTruckFill } from "react-icons/ri";
 import { IoMdHome } from "react-icons/io";
 import { IoMdCalendar } from "react-icons/io";
 import { IoMdPeople } from "react-icons/io";
@@ -15,7 +15,7 @@ export default function Header(){
         <Box>
             <HeaderStyle>
                 <Button fullWidth={true} startIcon={<IoMdHome className="icon"/>} onClick={()=>{navigate(`/app/home`)}}/>
-                <Button fullWidth={true} startIcon={<IoMdCash className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<RiTruckFill className="icon"/>} onClick={()=>{navigate(`/app/stock`)}}/>
                 <Button fullWidth={true} startIcon={<IoMdCalendar className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoMdPeople className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoIosCheckboxOutline className="icon"/>} onClick={()=>{navigate(`/app/assignments`)}}/>
