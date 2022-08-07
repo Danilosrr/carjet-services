@@ -32,7 +32,7 @@ export default function ExcelInput(){
         const fields = Object.keys(data)
         const columns = fields.map((key,i) => {
             return (
-                {id:i, field:key, headerName:key, width:100}
+                {id:i, field:key, headerName:key, flex: 1}
             )
         });
         return columns
