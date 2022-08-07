@@ -1,12 +1,11 @@
 import XLSX from "xlsx";
 
 function parseSheet(file:Express.Multer.File){
-    const rawFile = XLSX.readFile(file.path);
-    const workSheet = {};
+    const workBook = XLSX.readFile(file.path);
 
-    for (const sheetName of rawFile.SheetNames) {
-        workSheet[sheetName] = XLSX.utils.sheet_to_json(rawFile.Sheets[sheetName]);
-    } 
+    const sheet_name_list = workBook.SheetNames;
+
+    const workSheet = XLSX.utils.sheet_to_json(workBook.Sheets[sheet_name_list[0]]);
 
     return workSheet
 }

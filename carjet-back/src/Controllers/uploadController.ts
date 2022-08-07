@@ -7,5 +7,5 @@ export default function uploadFile(req:Request,res:Response) {
     const workSheet = excelService.parseSheet(file);
 
     console.log(workSheet);
-    res.send(file.path);
+    res.send();
 }
