@@ -1,6 +1,5 @@
 import { Box, Button } from "@mui/material"
 import { SiMicrosoftexcel } from "react-icons/si";
-import { read, readFile, utils, writeFileXLSX, writeXLSX } from 'xlsx';
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
 
@@ -8,9 +7,10 @@ export default function ExcelInput(){
     const { token } = useAuth();
 
     async function importExcel(file){
+        const selectedFile = { selectedFile: file };
+        console.log(selectedFile);
         try {
-            await api.sendFile(file,token)
-            console.log(file);  
+            await api.sendFile(selectedFile,token)
         } catch (error) {
             console.log(error)
         }
