@@ -31,8 +31,18 @@ async function getProviders(token) {
 }
 
 async function sendFile(file,token) {
-    const config = requestConfig(token);
-    return baseAPI.post("/upload",file,config);
+    const formData = new FormData();
+    formData.append('table',file);
+
+    const config = { 
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": 'multipart/form-data;',
+        },
+        data: formData,
+    }
+
+    return await baseAPI.post("/upload",formData,config);
 }
 
 const api = {

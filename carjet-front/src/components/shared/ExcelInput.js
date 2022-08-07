@@ -1,4 +1,4 @@
-import { Box, Input } from "@mui/material"
+import { Box, Button, Input } from "@mui/material"
 import { SiMicrosoftexcel } from "react-icons/si";
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
@@ -17,10 +17,11 @@ export default function ExcelInput(){
 
     return(
         <Box display={'flex'} justifyContent={'center'} marginTop={'20px'}>
-            <form target="_blank" method="post" enctype="multipart/form-data">
-                <input type="file" name="table" accept=".xlsx, .xls, .csv"/>
-                <input formaction="http://localhost:4000/upload" type="submit"/>
-            </form>
+            <Button sx={{gap: '10px'}} variant="contained" component="label">
+                <SiMicrosoftexcel fontSize={'26px'}/>
+                    Upload
+                <input hidden type="file" name="table" accept=".xlsx, .xls, .csv" onChange={(e)=>{ const file = e.target.files[0]; importExcel(file) }}/>
+            </Button>
         </Box>
     )
 }
