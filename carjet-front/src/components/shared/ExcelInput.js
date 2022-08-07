@@ -9,13 +9,15 @@ export default function ExcelInput(){
     const { token } = useAuth();
     const [loading,setLoading] = useState(false);
     const [list,setList] = useState([]);
+    const [column,setColumn] = useState([]);
 
 
     async function importExcel(file){
         setLoading(true);
         try {
             const upload = await api.sendFile(file,token);
-            setList(upload.data)
+            setColumn(createColumns(upload.data[0]));
+            setList(upload.data);
             console.log(upload,list);
             setLoading(false);
         } catch (error) {
@@ -26,14 +28,16 @@ export default function ExcelInput(){
 
     // upload.data will be the database response not the json parse, id == database id
 
-    const columns = [
-        { id:2, field: 'Code', headerName: 'id', width: 70 },
-        { id:3, field: 'Product Name', headerName: 'Product Name', width: 130 },
-        { id:4, field: 'Specification', headerName: 'Specification', width: 130 },
-        { id:5, field: 'Quantity', headerName: 'Quantity', width: 130 },
-        { id:6, field: 'Reporter', headerName: 'Reporter', width: 130 },
-        { id:7, field: 'Summary', headerName: 'Summary', width: 130 },
-    ]
+    function createColumns(data){
+        const fields = Object.keys(data)
+        const columns = fields.map((key,i) => {
+            return (
+                {id:i, field:key, headerName:key, width:100}
+            )
+        });
+        return columns
+    }
+
 
     return(
         <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} marginTop={'20px'} height={'100%'}>
@@ -46,7 +50,7 @@ export default function ExcelInput(){
                 {list.length>0?
                 <DataGrid
                     rows={list}
-                    columns={columns}
+                    columns={column}
                     checkboxSelection
                 />:<></>}
             </Box>
