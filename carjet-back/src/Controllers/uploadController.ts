@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 export default function uploadFile(req:Request,res:Response) {
-    const file = req;
+    const body = req.body
+    const file = req.file
     console.log(file);
-    res.send('arquivo lido');
+    res.send(body)
 }
