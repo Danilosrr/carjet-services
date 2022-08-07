@@ -7,5 +7,6 @@ export default function uploadFile(req:Request,res:Response) {
     const workSheet = excelService.parseSheet(file);
 
     console.log(workSheet);
-    res.send();
+    //response will be the database response not the json parse, is necessary to send id, wait for the final database format
+    res.send(workSheet);
 }
