@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
+import { excelService } from "../Services/excelService.js";
 
 export default function uploadFile(req:Request,res:Response) {
-    const body = req.body
-    const file = req.file
-    console.log(file);
-    res.send(body)
+    const file = req.file;
+
+    const workSheet = excelService.parseSheet(file);
+
+    console.log(workSheet);
+    res.send(file.path);
 }
