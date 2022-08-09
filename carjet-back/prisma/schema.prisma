@@ -21,6 +21,7 @@ model Branch {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   location  Json   
+  services  Service[]
   @@map("branches") 
 }
 
@@ -28,5 +29,34 @@ model Provider {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   location  Json   
+  services  Service[]
+  stocks    Stock[]
   @@map("providers") 
 }
+
+model Stock {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  info          String
+  quantity      Int
+  provider      Provider  @relation(fields: [providerId], references: [id])
+  providerId    Int    
+  createdAt     DateTime  @default(now()) @db.Date
+  @@map("stock") 
+}
+
+model Service {
+  id            Int       @id @default(autoincrement())
+  code          Int     
+  name          String 
+  specification String
+  quantity      Int
+  provider      Provider  @relation(fields: [providerId], references: [id])
+  providerId    Int    
+  branch        Branch    @relation(fields: [branchId], references: [id])
+  branchId      Int
+  createdAt     DateTime  @default(now())
+  closedAt      DateTime?          
+  @@map("services") 
+}
+

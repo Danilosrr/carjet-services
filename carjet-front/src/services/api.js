@@ -30,7 +30,12 @@ async function getProviders(token) {
     return baseAPI.get("/location?show=provider", config);
 }
 
-async function sendFile(file,token) {
+async function getStock(provider,token) {
+    const config = requestConfig(token);
+    return baseAPI.get(`/stock/${provider}`, config);
+}
+
+async function sendFile(file,provider,token) {
     const formData = new FormData();
     formData.append('table',file);
 
@@ -42,7 +47,7 @@ async function sendFile(file,token) {
         data: formData,
     }
 
-    return await baseAPI.post("/upload",formData,config);
+    return await baseAPI.post(`/upload/stock/${provider}`,formData,config);
 }
 
 const api = {
@@ -50,7 +55,8 @@ const api = {
     signIn,
     getBranches,
     getProviders,
-    sendFile
+    sendFile,
+    getStock
 };
 
 export default api;

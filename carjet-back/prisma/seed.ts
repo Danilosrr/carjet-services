@@ -21,6 +21,21 @@ const providers = [
     { name:'fornecedor 8', location: {lat:-7.12261757851639, lng:-34.87016896619387}}
 ]
 
+const stock = [
+    { name:'filme 1', info: "largura 1,90m", quantity: 10, providerId: 4},
+    { name:'filme 2', info: "largura 1,90m", quantity: 10, providerId: 4},
+    { name:'filme 3', info: "largura 800mm", quantity: 10, providerId: 4},
+    { name:'filme 4', info: "largura 1m", quantity: 10, providerId: 4},
+    { name:'filme 5', info: "largura 1m", quantity: 10, providerId: 4},
+    { name:'filme 6', info: "largura 800mm", quantity: 10, providerId: 4},
+    { name:'filme 7', info: "largura 1m", quantity: 10, providerId: 4},
+    { name:'filme 8', info: "largura 1m", quantity: 10, providerId: 4},
+    { name:'filme 15', info: "largura 1m", quantity: 10, providerId: 4},
+    { name:'filme 16', info: "largura 800mm", quantity: 10, providerId: 4},
+    { name:'filme 17', info: "largura 1m", quantity: 20, providerId: 1},
+    { name:'filme 18', info: "largura 1m", quantity: 5, providerId: 1},
+]
+
 async function main(){
 
     await prisma.branch.createMany({
@@ -33,6 +48,10 @@ async function main(){
         skipDuplicates: true
     });
     
+    await prisma.stock.createMany({
+        data: stock,
+        skipDuplicates: true
+    });
 }
 
 main().catch( error => {

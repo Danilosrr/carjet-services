@@ -10,6 +10,12 @@ function parseSheet(file:Express.Multer.File){
     return workSheet
 }
 
+function formatSheet(sheet:Object[],id:number){
+    const formatedSheet = sheet.map(row => ({ ...row, providerId: +id }));
+    return formatedSheet;
+}
+
 export const excelService = {
-    parseSheet
+    parseSheet,
+    formatSheet
 }

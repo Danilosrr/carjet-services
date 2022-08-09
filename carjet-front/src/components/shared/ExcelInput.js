@@ -1,5 +1,5 @@
-import { Box, Button } from "@mui/material"
-import { useState } from "react";
+import { Box, Button, MenuItem, TextField } from "@mui/material"
+import { useEffect, useState } from "react";
 import { SiMicrosoftexcel } from "react-icons/si";
 import { DataGrid } from '@mui/x-data-grid';
 import useAuth from "../../hooks/useAuth";
@@ -10,15 +10,27 @@ export default function ExcelInput(){
     const [loading,setLoading] = useState(false);
     const [list,setList] = useState([]);
     const [column,setColumn] = useState([]);
+    const [provider,setProvider] = useState(0);
+    const [providers,setProviders] = useState(null);
 
+    useEffect(() => {
+        async function loadPage() {
+            if (!token) return;
+    
+            const { data: providers } = await api.getProviders(token);
+            setProviders(providers);
+        }
+        loadPage();
+    },[])
 
     async function importExcel(file){
         setLoading(true);
         try {
-            const upload = await api.sendFile(file,token);
-            setColumn(createColumns(upload.data[0]));
+            const upload = await api.sendFile(file,provider,token);
             setList(upload.data);
-            console.log(upload,list);
+            if(upload.data.length>0){
+                setColumn(createColumns(upload.data[0]));
+            }
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -26,8 +38,10 @@ export default function ExcelInput(){
         }
     }
 
-    // upload.data will be the database response not the json parse, id == database id
-
+    function handleInputChange(e) {
+        setProvider(e.target.value);
+    }
+    
     function createColumns(data){
         const fields = Object.keys(data)
         const columns = fields.map((key,i) => {
@@ -41,12 +55,19 @@ export default function ExcelInput(){
 
     return(
         <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} marginTop={'20px'} height={'100%'}>
-            <Button sx={{gap: '10px', height: 'fit-content', marginBottom: '20px'}} variant="contained" component="label" disabled={loading}>
-                <SiMicrosoftexcel fontSize={'26px'}/>
-                    Upload
-                <input hidden type="file" name="table" accept=".xlsx, .xls, .csv" onChange={(e)=>{ const file = e.target.files[0]; importExcel(file) }}/>
-            </Button>
-            <Box height={'100%'} width={'100%'} >
+            <Box display={'flex'} gap={'10px'} flexDirection={'column'} justifyContent={'center'}>
+                {!!providers?
+                    <TextField select sx={{ width: '150px' }} label="estoque"  onChange={handleInputChange} value={provider}>
+                            {providers.map(provider => <MenuItem key={provider.id} value={provider.id}>{provider.name}</MenuItem>)}
+                    </TextField>
+                :<></>}
+                <Button sx={{gap: '10px', height: 'fit-content', marginBottom: '20px', padding: '10px'}} variant="contained" component="label" >
+                    <SiMicrosoftexcel fontSize={'26px'}/>
+                        Upload
+                    <input hidden type="file" name="table" accept=".xlsx, .xls, .csv" onChange={(e)=>{ const file = e.target.files[0]; importExcel(file) }} disabled={(loading || !provider)}/>
+                </Button>
+            </Box>
+            <Box height={'70%'} width={'100%'} >
                 {list.length>0?
                 <DataGrid
                     rows={list}
