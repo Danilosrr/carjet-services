@@ -21,7 +21,6 @@ model Branch {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   location  Json   
-  services  Service[]
   @@map("branches") 
 }
 
@@ -52,11 +51,9 @@ model Service {
   specification String
   quantity      Int
   provider      Provider  @relation(fields: [providerId], references: [id])
-  providerId    Int    
-  branch        Branch    @relation(fields: [branchId], references: [id])
-  branchId      Int
+  providerId    Int  
   createdAt     DateTime  @default(now())
-  closedAt      DateTime?          
+  closedAt      DateTime?  
+  @@unique([name,code])        
   @@map("services") 
 }
-

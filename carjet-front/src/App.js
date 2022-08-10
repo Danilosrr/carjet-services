@@ -6,9 +6,9 @@ import LoadingContext from "./context/LoadingContext";
 import GlobalStyle from './assets/css/GlobalStyle';
 import Home from "./pages/Home";
 import Stock from "./pages/Stock";
-import Assignments from "./pages/Assignments";
 import Login from "./pages/Login";
 import StockParam from "./pages/StockParam";
+import Upload from "./pages/Upload";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function App() {
                 <Route path="/app/home" element={<Home/>} />
                 <Route path="/app/stock" element={<Stock/>} />
                 <Route path="/app/stock/:id" element={<StockParam/>} />
-                <Route path="/app/assignments" element={<Assignments/>} />
+                <Route path="/app/upload" element={<Upload/>} />
               </Route>
             </Routes>
           </BrowserRouter>

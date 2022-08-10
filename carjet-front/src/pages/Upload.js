@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import ExcelInput from "../components/shared/ExcelInput";
 import Header from "../components/shared/Header";
 
-export default function Assignments(){
+export default function Upload(){
     return(
         <Box sx={{position:'fixed', top:'0', bottom:'0', width:'100%'}}>
             <Header/>
