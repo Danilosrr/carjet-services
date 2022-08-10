@@ -19,14 +19,26 @@ async function queryAllProviders(){
 }
 
 async function findBranchByName(name:string){
-    return await prisma.branch.findFirst({
+    return await prisma.branch.findUnique({
         where: {name}
     })
 }
 
 async function findProviderByName(name:string){
-    return await prisma.provider.findFirst({
+    return await prisma.provider.findUnique({
         where: {name}
+    })
+}
+
+async function findBranchById(id:number){
+    return await prisma.branch.findUnique({
+        where: {id}
+    })
+}
+
+async function findProviderById(id:number){
+    return await prisma.provider.findUnique({
+        where: {id}
     })
 }
 
@@ -41,11 +53,13 @@ async function createProvider(createProvider:createProvider){
 export const branchRepository = {
     queryAllBranches,
     findBranchByName,
+    findBranchById,
     createBranch,   
 }
 
 export const providerRepository = {
     queryAllProviders,
     findProviderByName,
+    findProviderById,
     createProvider
 }

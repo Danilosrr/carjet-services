@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Stock from "./pages/Stock";
 import Assignments from "./pages/Assignments";
 import Login from "./pages/Login";
+import StockParam from "./pages/StockParam";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="app" element={<MainApp/>}>
                 <Route path="/app/home" element={<Home/>} />
                 <Route path="/app/stock" element={<Stock/>} />
+                <Route path="/app/stock/:id" element={<StockParam/>} />
                 <Route path="/app/assignments" element={<Assignments/>} />
               </Route>
             </Routes>

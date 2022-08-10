@@ -30,9 +30,14 @@ async function getProviders(token) {
     return baseAPI.get("/location?show=provider", config);
 }
 
-async function getStock(provider,token) {
+async function getStock(id,token) {
     const config = requestConfig(token);
-    return baseAPI.get(`/stock/${provider}`, config);
+    return baseAPI.get(`/stock/${id}`, config);
+}
+
+async function getProvider(id,token) {
+    const config = requestConfig(token);
+    return baseAPI.get(`/provider/${id}`, config);
 }
 
 async function sendFile(file,provider,token) {
@@ -56,7 +61,8 @@ const api = {
     getBranches,
     getProviders,
     sendFile,
-    getStock
+    getStock,
+    getProvider
 };
 
 export default api;

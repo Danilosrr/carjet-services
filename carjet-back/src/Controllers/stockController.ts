@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { func } from "joi";
+import { providerRepository } from "../Repositories/locationRepository.js";
 import { stockRepository } from "../Repositories/stockRepository.js";
 import { excelService } from "../Services/excelService.js";
 
@@ -22,4 +23,12 @@ export async function getStockByProvider(req:Request,res:Response){
     const query = await stockRepository.queryByProvider(id);
 
     res.send(query);
+}
+
+export async function getProviderInfo(req:Request,res:Response){
+    const id:number = +req.params.id;
+
+    const provider = await providerRepository.findProviderById(id);
+
+    res.send(provider);
 }

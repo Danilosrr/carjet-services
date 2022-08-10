@@ -32,9 +32,7 @@ const mapOptions = {
 
 export default function Map(props) {
     const [location,setLocation] = useState(null);
-    const [branchBtn,setBranchBtn] = useState(false);
     const [providerBtn,setProviderBtn] = useState(false);
-    const [branches,setBranches] = useState(null);
     const [providers,setProviders] = useState(null);
     const { token,signOut } = useAuth();
     const navigate = useNavigate();
@@ -65,25 +63,17 @@ export default function Map(props) {
     useEffect(() => {
         async function loadPage() {
             if (!token) return;
-    
-            const { data: branches } = await api.getBranches(token);
-            setBranches(branches)
 
             const { data: providers } = await api.getProviders(token);
             setProviders(providers)
         }
         console.log(token)
         loadPage();
-    }, [token,branchBtn,providerBtn]);
+    }, [token,providerBtn]);
 
     return isLoaded ? (
         <MapStyle>
             <GoogleMap mapContainerStyle={containerStyle} center={location} zoom={12} options={mapOptions} >
-                {branchBtn?branches.map( coord =>{ 
-                    return (
-                        <Pin key={coord.id} name={coord.name} id={coord.id} coord={{lat:coord.location.lat, lng: coord.location.lng}} type={'branch'}/>
-                    )
-                }):<></>}
                 {providerBtn?providers.map( coord =>{ 
                     return (
                         <Pin key={coord.id} name={coord.name} id={coord.id} coord={{lat:coord.location.lat, lng: coord.location.lng}} type={'provider'}/>
@@ -93,7 +83,6 @@ export default function Map(props) {
             <Box sx={{ display:'flex', flexDirection:'column-reverse', alignItems:'flex-start', position:'absolute', bottom:'5px', left:'5px', backgroundColor:'rgba(255,255,255,0.95)' }}>
                 <Button sx={{ display:'flex', justifyContent:'flex-start', color:'#000000' }} fullWidth={true} startIcon={<FaHandshake/>} onClick={()=>setProviderBtn(!providerBtn)}>Fornecedores</Button>
                 <Divider sx={{width: '100%', color: '#000000'}}/>
-                <Button sx={{ display:'flex', justifyContent:'flex-start', color:'#000000' }} fullWidth={true} startIcon={<StoreMallDirectoryIcon/>} onClick={()=>setBranchBtn(!branchBtn)}>Filiais</Button>
             </Box>
             <Box sx={logoutbutton}>
                 <Button sx={{ color:"#000000" }} onClick={handleSignOut} startIcon={<LogoutIcon sx={{ fontSize: "26px"}}/>}>Sair</Button>

@@ -1,10 +1,10 @@
 import { Marker } from '@react-google-maps/api';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Pin(props){
     const {type,coord,name,id} = props;
-    const [visible,setVisible] = useState(false);
+    const navigate = useNavigate();
     const icon = (type === "branch"? "\ue8d1" : "\uebcb")
 
     return(
@@ -13,7 +13,7 @@ export default function Pin(props){
                 key={id} 
                 title={name} 
                 position={ {lat:coord.lat,lng:coord.lng} }
-                onClick={()=>setVisible(!visible)}
+                onClick={()=>{navigate(`/app/stock/${id}`)}}
             />
         </>
     )

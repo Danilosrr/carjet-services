@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import { getLocation } from "../Controllers/locationController.js";
 import validToken from "../Middlewares/validateToken.js";
 
