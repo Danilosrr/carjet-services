@@ -27,7 +27,7 @@ export default function ExcelInput(){
         setLoading(true);
         try {
             const upload = await api.sendFile(file,provider,token);
-            setList(upload.data);
+            setList(createRows(upload.data));
             if(upload.data.length>0){
                 setColumn(createColumns(upload.data[0]));
             }
@@ -50,6 +50,10 @@ export default function ExcelInput(){
             )
         });
         return columns
+    }
+    function createRows(data){
+        const rows = data.map((row,i) => ({...row, id:i}));
+        return rows
     }
 
 

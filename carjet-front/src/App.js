@@ -26,6 +26,7 @@ export default function App() {
                 <Route path="/app/stock" element={<Stock/>} />
                 <Route path="/app/stock/:id" element={<StockParam/>} />
                 <Route path="/app/upload" element={<Upload/>} />
+                <Route path="/app/services" element={<></>} />
               </Route>
             </Routes>
           </BrowserRouter>

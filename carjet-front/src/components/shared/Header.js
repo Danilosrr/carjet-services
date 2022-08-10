@@ -16,7 +16,7 @@ export default function Header(){
             <HeaderStyle>
                 <Button fullWidth={true} startIcon={<IoMdHome className="icon"/>} onClick={()=>{navigate(`/app/home`)}}/>
                 <Button fullWidth={true} startIcon={<RiTruckFill className="icon"/>} onClick={()=>{navigate(`/app/stock`)}}/>
-                <Button fullWidth={true} startIcon={<IoMdCar className="icon"/>}/>
+                <Button fullWidth={true} startIcon={<IoMdCar className="icon"/>} onClick={()=>{navigate(`/app/services`)}}/>
                 <Button fullWidth={true} startIcon={<IoMdPeople className="icon"/>}/>
                 <Button fullWidth={true} startIcon={<IoMdDownload className="icon"/>} onClick={()=>{navigate(`/app/upload`)}}/>
             </HeaderStyle>
