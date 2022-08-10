@@ -1,6 +1,6 @@
-import Joi, { Schema } from "joi";
+import { Schema } from "joi";
 import XLSX from "xlsx";
-import { unprocessableEntityError } from "../Middlewares/errorHandler.js";
+import { createService, serviceRepository } from "../Repositories/serviceRepository.js";
 
 function parseSheet(file:Express.Multer.File){
     const workBook = XLSX.readFile(file.path);
@@ -12,16 +12,25 @@ function parseSheet(file:Express.Multer.File){
     return workSheet
 }
 
-function formatSheet(sheet:Object[],id:number){
-    const formatedSheet = sheet.map(row => ({ ...row, providerId: +id }));
+async function formatSheet(sheet:Object[],id:number){
+    const idSheet = sheet.map(row => ({ ...row, providerId: +id }));
+
+    const formatedSheet = await Promise.all( 
+        idSheet.map( async (row:createService) => {
+            const query = await serviceRepository.queryByCodeName(row.code,row.name);
+            if (!query) return {...row, status: 'inexistente'}
+            else return {...row, status:'existe'}
+        })
+    )
+    
     return formatedSheet;
 }
 
 function verifySchema(sheet:Object[],schema:Schema){
     let verify = true;
     sheet.forEach( row => { 
-            const validation = schema.validate(row, { abortEarly: true });      
-            if (validation.error) verify = false
+        const validation = schema.validate(row, { abortEarly: true });      
+        if (validation.error) verify = false
     });
     return verify;
 }

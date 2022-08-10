@@ -14,8 +14,10 @@ export async function uploadSheet(req:Request,res:Response) {
     const verifySchema = excelService.verifySchema(workSheet,serviceSchema);
     if (!verifySchema) throw unprocessableEntityError("invalid sheet format");
     
-    const formatedSheet = excelService.formatSheet(workSheet,id);
-    res.send(formatedSheet)
+    const formatedSheet = await excelService.formatSheet(workSheet,id);
+    
+    console.log(formatedSheet)
+    res.send(formatedSheet);
 }
 
 export async function getStockByProvider(req:Request,res:Response){
