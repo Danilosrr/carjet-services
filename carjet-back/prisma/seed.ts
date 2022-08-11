@@ -1,13 +1,13 @@
 import { prisma } from "../src/config/database.js";
 
 const branches = [
-    { name:'filial 1', location: {lat:-7.1786392072688345, lng:-34.83703429614767}},
-    { name:'filial 2', location: {lat:-7.128454017722097, lng:-34.86312917317562}},
-    { name:'filial 3', location: {lat:-7.072320816924103, lng:-34.84276138545525}},
-    { name:'filial 4', location: {lat:-7.0667796520529755, lng:-34.84883053158572}},
-    { name:'filial 5', location: {lat:-7.241346278412283, lng:-35.89021354787413}},
-    { name:'filial 6', location: {lat:-7.014509474877183, lng:-35.856612492032696}},
-    { name:'filial 7', location: {lat:-8.119797509204886, lng:-34.899330599456306}}
+    { name:'filial 1', providerId:1, location: {lat:-7.1786392072688345, lng:-34.83703429614767}},
+    { name:'filial 2', providerId:2, location: {lat:-7.128454017722097, lng:-34.86312917317562}},
+    { name:'filial 3', providerId:3, location: {lat:-7.072320816924103, lng:-34.84276138545525}},
+    { name:'filial 4', providerId:4, location: {lat:-7.0667796520529755, lng:-34.84883053158572}},
+    { name:'filial 5', providerId:5, location: {lat:-7.241346278412283, lng:-35.89021354787413}},
+    { name:'filial 6', providerId:6, location: {lat:-7.014509474877183, lng:-35.856612492032696}},
+    { name:'filial 7', providerId:7, location: {lat:-8.119797509204886, lng:-34.899330599456306}}
 ]
 
 const providers = [
@@ -36,20 +36,49 @@ const stock = [
     { name:'filme 18', info: "largura 1m", quantity: 5, providerId: 1},
 ]
 
+const services = [
+    {
+        code: 141,
+        name: 'Produto 1',
+        specification: 'Especificação 1',
+        quantity: 5,
+        providerId: 1,
+    },
+    {
+        code: 253,
+        name: 'Produto 2',
+        specification: 'Especificação 2',
+        quantity: 14,
+        providerId: 1,
+    },
+    {
+        code: 365,
+        name: 'Produto 3',
+        specification: 'Especificação 3',
+        quantity: 23,
+        providerId: 1,
+    },
+]
+
 async function main(){
+
+    await prisma.provider.createMany({
+        data: providers,
+        skipDuplicates: true
+    });
 
     await prisma.branch.createMany({
       data: branches,
       skipDuplicates: true
     });
 
-    await prisma.provider.createMany({
-        data: providers,
-        skipDuplicates: true
-    });
-    
     await prisma.stock.createMany({
         data: stock,
+        skipDuplicates: true
+    });
+
+    await prisma.service.createMany({
+        data: services,
         skipDuplicates: true
     });
 }

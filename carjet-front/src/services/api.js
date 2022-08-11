@@ -30,6 +30,11 @@ async function getProviders(token) {
     return baseAPI.get("/location?show=provider", config);
 }
 
+async function getServices(id,token) {
+    const config = requestConfig(token);
+    return baseAPI.get(`/services/${id}`, config);
+}
+
 async function getStock(id,token) {
     const config = requestConfig(token);
     return baseAPI.get(`/stock/${id}`, config);
@@ -61,6 +66,7 @@ const api = {
     getBranches,
     getProviders,
     sendFile,
+    getServices,
     getStock,
     getProvider
 };

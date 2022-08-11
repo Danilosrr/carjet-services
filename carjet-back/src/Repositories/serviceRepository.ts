@@ -7,9 +7,15 @@ async function queryAll(){
     return await prisma.service.findMany({})
 }
 
-async function queryByCodeName(code:number,name:string){
+async function queryByProvider(providerId:number){
+    return await prisma.service.findMany({
+        where: { providerId }
+    })
+}
+
+async function queryByCodeNameProvider(code:number,name:string,providerId:number){
     return await prisma.service.findFirst({
-        where: { code,name }
+        where: { code,name,providerId }
     })
 }
 
@@ -19,6 +25,7 @@ async function createService(createService:createService){
 
 export const serviceRepository = {
     queryAll,
-    queryByCodeName,
+    queryByProvider,
+    queryByCodeNameProvider,
     createService
 }

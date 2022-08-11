@@ -5,36 +5,50 @@ import { IoMdSearch } from "react-icons/io";
 import Header from "../components/shared/Header";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
+import formatDate from "../services/dateFormat";
 
-export default function Stock(){
+export default function Stock(props){
+    const { stock } = props
     const { token } = useAuth();
     const [loading,setLoading] = useState(false);
     const [list,setList] = useState([]);
     const [column,setColumn] = useState([]);
-    const [provider,setProvider] = useState(0);
-    const [providers,setProviders] = useState(null);
+    const [option,setOption] = useState(0);
+    const [options,setOptions] = useState(null);
 
     useEffect(() => {
         async function loadPage() {
             if (!token) return;
-    
-            const { data: providers } = await api.getProviders(token);
-            setProviders(providers);
+            setList([]); setOption(0);
+
+            if (stock) {
+                const { data: options } = await api.getProviders(token);
+                setOptions(options);
+            } else {
+                const { data: options } = await api.getBranches(token); 
+                setOptions(options);
+            }
         }
         loadPage();
-    },[])
+    },[window.location.pathname])
 
     
-    async function getStock(){
+    async function getInfo(){
         setLoading(true);
         try {
-            const query = await api.getStock(provider,token);
-            console.log(provider,query)
-            setList(query.data);
-            if(query.data.length>0){
-                setColumn(createColumns(query.data[0]));
+            if (stock) {
+                const query = await api.getStock(option,token);
+                if (query.data) { query.data.forEach(row => {row.createdAt = formatDate(row.createdAt)}); }
+                setList(query.data);
+                if(query.data.length>0){ setColumn(createColumns(query.data[0])) }
+                setLoading(false);
+            } else {
+                const query = await api.getServices(option,token);
+                if (query.data) { query.data.forEach(row => {row.createdAt = formatDate(row.createdAt)}); }
+                setList(query.data);
+                if(query.data.length>0){ setColumn(createColumns(query.data[0])) }
+                setLoading(false);
             }
-            setLoading(false);
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -42,7 +56,7 @@ export default function Stock(){
     }
     
     function handleInputChange(e) {
-        setProvider(e.target.value);
+        setOption(e.target.value);
     }
 
     function createColumns(data){
@@ -61,15 +75,15 @@ export default function Stock(){
             <Box sx={{position:'absolute', width: '100%', top:'65px', bottom:'0'}}>
                 <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} marginTop={'20px'} height={'100%'}>
                     <Box display={'flex'} gap={'10px'} flexDirection={'column'} height={'120px'} justifyContent={'start'}>
-                        {!!providers?
-                            <TextField select sx={{ width: '150px' }} label="estoque"  onChange={handleInputChange} value={provider}>
-                                    {providers.map(provider => <MenuItem key={provider.id} value={provider.id}>{provider.name}</MenuItem>)}
+                        {!!options?
+                            <TextField select sx={{ width: '150px' }} label={stock?"estoque":"filial"}  onChange={handleInputChange} value={option}>
+                                    {options.map(option => <MenuItem key={option.id} value={option.id}>{option.name}</MenuItem>)}
                             </TextField>
                         :<></>}
                         <Button sx={{gap: '10px', height: 'fit-content', marginBottom: '20px', padding: '10px'}} variant="contained" component="label">
                             <IoMdSearch fontSize={'26px'}/>
                                 Vizualizar
-                            <button hidden onClick={getStock} disabled={(loading || !provider)}/>
+                            <button hidden onClick={getInfo} disabled={(loading || !option)}/>
                         </Button>
                     </Box>
                     <Box height={'70%'} width={'95%'} >

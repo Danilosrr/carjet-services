@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Header from "../components/shared/Header";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
+import formatDate from "../services/dateFormat";
 
 export default function StockParam(){
     const { token } = useAuth();
@@ -35,6 +36,7 @@ export default function StockParam(){
     async function getStock(){
         try {
             const query = await api.getStock(id,token);
+            if (query.data) { query.data.forEach(row => {row.createdAt = formatDate(row.createdAt)}); }
             setList(query.data);
             if(query.data.length>0){
                 setColumn(createColumns(query.data[0]));

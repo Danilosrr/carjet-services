@@ -18,9 +18,11 @@ model User {
 }
 
 model Branch {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  location  Json   
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  location    Json   
+  provider    Provider  @relation(fields: [providerId], references: [id])
+  providerId  Int    
   @@map("branches") 
 }
 
@@ -30,6 +32,7 @@ model Provider {
   location  Json   
   services  Service[]
   stocks    Stock[]
+  branch    Branch[]
   @@map("providers") 
 }
 
@@ -40,7 +43,7 @@ model Stock {
   quantity      Int
   provider      Provider  @relation(fields: [providerId], references: [id])
   providerId    Int    
-  createdAt     DateTime  @default(now()) @db.Date
+  createdAt     DateTime  @default(now())
   @@map("stock") 
 }
 
@@ -49,7 +52,7 @@ model Service {
   code          Int     
   name          String 
   specification String
-  quantity      Int
+  quantity      Float
   provider      Provider  @relation(fields: [providerId], references: [id])
   providerId    Int  
   createdAt     DateTime  @default(now())

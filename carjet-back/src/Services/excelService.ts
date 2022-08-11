@@ -14,12 +14,14 @@ function parseSheet(file:Express.Multer.File){
 
 async function formatSheet(sheet:Object[],id:number){
     const idSheet = sheet.map(row => ({ ...row, providerId: +id }));
-
+    
     const formatedSheet = await Promise.all( 
         idSheet.map( async (row:createService) => {
-            const query = await serviceRepository.queryByCodeName(row.code,row.name);
-            if (!query) return {...row, status: 'inexistente'}
-            else return {...row, status:'existe'}
+            const query = await serviceRepository.queryByCodeNameProvider(row.code,row.name,row.providerId);
+            delete row.providerId;
+            if (!query) return {...row, status: 'novo'}
+            if (!query.closedAt) return {...row, status:'em aberto'} 
+            if (query.closedAt) return {...row, status:'fechado'}
         })
     )
     

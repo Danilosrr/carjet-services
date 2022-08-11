@@ -23,10 +23,10 @@ export default function App() {
               <Route path="/" element={<Login/>} />
               <Route path="app" element={<MainApp/>}>
                 <Route path="/app/home" element={<Home/>} />
-                <Route path="/app/stock" element={<Stock/>} />
+                <Route path="/app/stock" element={<Stock stock={true}/>} key="estoque"/>
                 <Route path="/app/stock/:id" element={<StockParam/>} />
                 <Route path="/app/upload" element={<Upload/>} />
-                <Route path="/app/services" element={<></>} />
+                <Route path="/app/services" element={<Stock stock={false}/>} key="filiais"/>
               </Route>
             </Routes>
           </BrowserRouter>

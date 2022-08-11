@@ -4,6 +4,7 @@ export type createProvider = createBranch
 export type createBranch = {
     name:string
     location:Location
+    providerId:number
 }
 export type Location = {
     lat:number
