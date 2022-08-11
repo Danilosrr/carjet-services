@@ -66,7 +66,7 @@ export default function Stock(props){
         const fields = Object.keys(data)
         const columns = fields.map((key,i) => {
             return (
-                {id:i, field:key, headerName:key, flex: 1}
+                {id:i, field:key, headerName:key, flex: 1, hide:(key=="id")}
             )
         });
         return columns
