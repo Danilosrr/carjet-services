@@ -1,5 +1,6 @@
 function formatDate(databaseDate){
     const newDate = new Date(`${databaseDate}`);
+    if (newDate>0 == false) return;
     const date = {
         day: newDate.getDay(),
         month: newDate.getMonth(),

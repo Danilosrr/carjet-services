@@ -44,7 +44,10 @@ export default function Stock(props){
                 setLoading(false);
             } else {
                 const query = await api.getServices(option,token);
-                if (query.data) { query.data.forEach(row => {row.createdAt = formatDate(row.createdAt)}); }
+                if (query.data) { query.data.forEach(row => {
+                    row.createdAt = formatDate(row.createdAt); 
+                    row.closedAt = formatDate(row.closedAt); 
+                }); }
                 setList(query.data);
                 if(query.data.length>0){ setColumn(createColumns(query.data[0])) }
                 setLoading(false);
