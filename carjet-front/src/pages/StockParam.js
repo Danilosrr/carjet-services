@@ -1,4 +1,4 @@
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -22,7 +22,7 @@ export default function StockParam(){
             getProvider();
         }
         loadPage();
-    },[])
+    },[token])
 
     async function getProvider(){
         try {

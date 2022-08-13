@@ -40,5 +40,5 @@ export async function databaseSheet(req:Request,res:Response) {
     if (verifySchemaService) register = await excelService.registerServiceSheet(sheet,id);
     if (verifySchemaStock) register = await excelService.registerStockSheet(sheet,id);
 
-    res.send()
+    res.send(register);
 }
