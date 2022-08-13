@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PasswordInput from "../components/shared/PasswordInput";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
@@ -47,7 +47,7 @@ export default function Login() {
         <TextField name="email" sx={{ marginBottom: "16px", width: "80%" }} label="Email" type="email" variant="outlined" onChange={handleInputChange} value={formData.email}/>
         <PasswordInput name="password" sx={{ marginBottom: "16px", width: "80%" }} label="Senha" onChange={handleInputChange} value={formData.password}/>
         <Box sx={{ display: "flex", justifyContent: "space-between", width: "80%" }}>
-            <Link component={RouterLink} to="/">
+            <Link to="/" hidden>
                 <Typography>Não possuo cadastro</Typography>
             </Link>
             <Button variant="contained" type="submit">
