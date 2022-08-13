@@ -63,8 +63,8 @@ async function formatServiceSheet(sheet:Object[],id:number){
 async function registerServiceSheet(sheet:formatedServiceSheet[]){ 
     const register = await Promise.all( 
         sheet.map( async (row) => {
-            if (row.status === 'novo') { delete row.status; serviceRepository.createService(row)}
-            if (row.status === 'aberto') { delete row.status; serviceRepository.updateService(row)}
+            delete row.status;
+            await serviceRepository.createUpdateService(row);
         })
     )
     return register;
@@ -73,8 +73,10 @@ async function registerServiceSheet(sheet:formatedServiceSheet[]){
 async function registerStockSheet(sheet:formatedStockSheet[]){    
     const register = await Promise.all( 
         sheet.map( async (row) => {
-            if (row.status === 'novo') { delete row.status; stockRepository.createStock(row)}
-            if (row.status === 'cadastrado') { delete row.status; stockRepository.updateStock(row)}
+            delete row.status;
+            const exists = await stockRepository.findByNameProvider(row.name,row.providerId);
+            if (exists) await stockRepository.createStock(row);
+            else await stockRepository.updateStock(row);
         })
     )
     

@@ -15,24 +15,22 @@ async function queryByProvider(providerId:number){
 }
 
 async function queryByCodeNameProvider(code:number,name:string,providerId:number){
-    return await prisma.service.findFirst({
-        where: { code,name,providerId }
+    return await prisma.service.findUnique({
+        where: { 
+            name_code_providerId: { code,name,providerId } 
+        }
     })
 }
 
-async function createService(createService:createService){
-    return await prisma.service.create({ data:createService })
-}
+async function createUpdateService(createService:createService){
+    const {name,code,providerId,quantity,specification} = createService;
 
-async function updateService(createService:createService){
-    const {name,code} = createService;
-
-    return await prisma.service.update({ 
+    return await prisma.service.upsert({ 
         where: { 
-            name_code: { name,code }
+            name_code_providerId: { name,code,providerId }
         },
-        data: { closedAt: new Date() 
-        } 
+        update: { closedAt: new Date()},
+        create: { code,name,quantity,specification,providerId },
     })
 }
 
@@ -40,6 +38,5 @@ export const serviceRepository = {
     queryAll,
     queryByProvider,
     queryByCodeNameProvider,
-    createService,
-    updateService
+    createUpdateService
 }

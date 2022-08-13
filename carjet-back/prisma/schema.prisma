@@ -57,7 +57,7 @@ model Service {
   provider      Provider  @relation(fields: [providerId], references: [id])
   providerId    Int  
   createdAt     DateTime  @default(now())
-  closedAt      DateTime?  
-  @@unique([name,code])        
+  closedAt      DateTime? 
+  @@unique([name,code,providerId])        
   @@map("services") 
 }
