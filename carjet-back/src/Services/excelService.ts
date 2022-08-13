@@ -60,7 +60,7 @@ async function formatServiceSheet(sheet:Object[],id:number){
     return formatedSheet;
 }
 
-async function registerServiceSheet(sheet:formatedServiceSheet[],id:number){ 
+async function registerServiceSheet(sheet:formatedServiceSheet[]){ 
     const register = await Promise.all( 
         sheet.map( async (row) => {
             if (row.status === 'novo') { delete row.status; serviceRepository.createService(row)}
@@ -70,7 +70,7 @@ async function registerServiceSheet(sheet:formatedServiceSheet[],id:number){
     return register;
 }
 
-async function registerStockSheet(sheet:formatedStockSheet[],id:number){    
+async function registerStockSheet(sheet:formatedStockSheet[]){    
     const register = await Promise.all( 
         sheet.map( async (row) => {
             if (row.status === 'novo') { delete row.status; stockRepository.createStock(row)}

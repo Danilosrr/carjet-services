@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { unprocessableEntityError } from "../Middlewares/errorHandler.js";
-import { serviceRepository } from "../Repositories/serviceRepository.js";
-import { stockRepository } from "../Repositories/stockRepository.js";
 import { formatedServiceSchema, serviceSchema } from "../Schemas/serviceSchema.js";
 import { formatedStockSchema, stockSchema } from "../Schemas/stockSchema.js";
 import { excelService } from "../Services/excelService.js";
@@ -23,12 +21,11 @@ export async function uploadSheet(req:Request,res:Response) {
 
     const deleteFile = excelService.deleteSheet(file);
 
-    console.log(formatedSheet)
+    console.log(formatedSheet);
     res.send(formatedSheet);
 }
 
 export async function databaseSheet(req:Request,res:Response) {
-    const id:number = +req.params.id;
     const sheet = req.body;
 
     const verifySchemaService = excelService.verifySchema(sheet,formatedServiceSchema);
@@ -37,8 +34,8 @@ export async function databaseSheet(req:Request,res:Response) {
     if (!verifySchemaService && !verifySchemaStock) throw unprocessableEntityError("invalid sheet format");
 
     let register;
-    if (verifySchemaService) register = await excelService.registerServiceSheet(sheet,id);
-    if (verifySchemaStock) register = await excelService.registerStockSheet(sheet,id);
+    if (verifySchemaService) register = await excelService.registerServiceSheet(sheet);
+    if (verifySchemaStock) register = await excelService.registerStockSheet(sheet);
 
     res.send(register);
 }
