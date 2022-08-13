@@ -1,4 +1,5 @@
 import { Service } from "@prisma/client";
+import { networkInterfaces } from "os";
 import { prisma } from "../config/database.js";
 
 export type createService = Omit< Service, "id" | "createdAt" | "closedAt">
@@ -23,9 +24,22 @@ async function createService(createService:createService){
     return await prisma.service.create({ data:createService })
 }
 
+async function updateService(createService:createService){
+    const {name,code} = createService;
+
+    return await prisma.service.update({ 
+        where: { 
+            name_code: { name,code }
+        },
+        data: { closedAt: new Date() 
+        } 
+    })
+}
+
 export const serviceRepository = {
     queryAll,
     queryByProvider,
     queryByCodeNameProvider,
-    createService
+    createService,
+    updateService
 }

@@ -1,7 +1,25 @@
 import { Schema } from "joi";
 import XLSX from "xlsx";
+import fs from "fs";
 import { createService, serviceRepository } from "../Repositories/serviceRepository.js";
 import { createStock, stockRepository } from "../Repositories/stockRepository.js";
+
+export type formatedServiceSheet = {
+    status: string;
+    code: number;
+    name: string;
+    specification: string;
+    quantity: number;
+    providerId: number;
+}
+
+export type formatedStockSheet = {
+    status: string;
+    providerId: number;
+    name: string;
+    info: string;
+    quantity: number;
+}
 
 function parseSheet(file:Express.Multer.File){
     const workBook = XLSX.readFile(file.path);
@@ -19,7 +37,6 @@ async function formatStockSheet(sheet:Object[],id:number){
     const formatedSheet = await Promise.all( 
         idSheet.map( async (row:createStock) => {
             const query = await stockRepository.findByNameProvider(row.name,row.providerId);
-            delete row.providerId;
             if (!query) return {...row, status: 'novo'}
             if (query) return {...row, status: 'cadastrado'}
         })
@@ -34,14 +51,34 @@ async function formatServiceSheet(sheet:Object[],id:number){
     const formatedSheet = await Promise.all( 
         idSheet.map( async (row:createService) => {
             const query = await serviceRepository.queryByCodeNameProvider(row.code,row.name,row.providerId);
-            delete row.providerId;
             if (!query) return {...row, status: 'novo'}
-            if (!query.closedAt) return {...row, status:'em aberto'} 
+            if (!query.closedAt) return {...row, status:'aberto'} 
             if (query.closedAt) return {...row, status:'fechado'}
         })
     )
     
     return formatedSheet;
+}
+
+async function registerServiceSheet(sheet:formatedServiceSheet[],id:number){ 
+    const register = await Promise.all( 
+        sheet.map( async (row) => {
+            if (row.status === 'novo') { delete row.status; serviceRepository.createService(row)}
+            if (row.status === 'aberto') { delete row.status; serviceRepository.updateService(row)}
+        })
+    )
+    return register;
+}
+
+async function registerStockSheet(sheet:formatedStockSheet[],id:number){    
+    const register = await Promise.all( 
+        sheet.map( async (row) => {
+            if (row.status === 'novo') { delete row.status; stockRepository.createStock(row)}
+            if (row.status === 'cadastrado') { delete row.status; stockRepository.updateStock(row)}
+        })
+    )
+    
+    return register;
 }
 
 function verifySchema(sheet:Object[],schema:Schema){
@@ -53,9 +90,18 @@ function verifySchema(sheet:Object[],schema:Schema){
     return verify;
 }
 
+function deleteSheet(file:Express.Multer.File){
+    const deleteFile = fs.unlink(file.path, (err) => console.log(`file ${file.filename} was deleted`));
+
+    return deleteFile;
+}
+
 export const excelService = {
     parseSheet,
     formatServiceSheet,
     formatStockSheet,
-    verifySchema
+    registerServiceSheet,
+    registerStockSheet,
+    verifySchema,
+    deleteSheet
 }

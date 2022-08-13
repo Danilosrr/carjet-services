@@ -49,8 +49,12 @@ export default function StockParam(){
     function createColumns(data){
         const fields = Object.keys(data)
         const columns = fields.map((key,i) => {
+            let visibility = false;
+            if (key === 'id') visibility = true
+            if (key === 'providerId') visibility = true
+            
             return (
-                {id:i, field:key, headerName:key, flex: 1}
+                {id:i, field:key, headerName:key, flex: 1, hide: visibility}
             )
         });
         return columns

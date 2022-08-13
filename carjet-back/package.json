@@ -37,6 +37,7 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/multer": "^1.4.7",
+    "@types/node": "^18.7.2",
     "@types/xlsx": "^0.0.36",
     "nodemon": "^2.0.19",
     "prisma": "^4.1.0",
