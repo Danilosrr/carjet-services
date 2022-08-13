@@ -21,7 +21,7 @@ export default function ExcelInput(){
             setProviders(providers);
         }
         loadPage();
-    },[])
+    },[token])
 
     async function importExcel(file){
         setLoading(true);

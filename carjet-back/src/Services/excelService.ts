@@ -1,6 +1,7 @@
 import { Schema } from "joi";
 import XLSX from "xlsx";
 import { createService, serviceRepository } from "../Repositories/serviceRepository.js";
+import { createStock, stockRepository } from "../Repositories/stockRepository.js";
 
 function parseSheet(file:Express.Multer.File){
     const workBook = XLSX.readFile(file.path);
@@ -12,7 +13,22 @@ function parseSheet(file:Express.Multer.File){
     return workSheet
 }
 
-async function formatSheet(sheet:Object[],id:number){
+async function formatStockSheet(sheet:Object[],id:number){
+    const idSheet = sheet.map(row => ({ ...row, providerId: +id }));
+    
+    const formatedSheet = await Promise.all( 
+        idSheet.map( async (row:createStock) => {
+            const query = await stockRepository.findByNameProvider(row.name,row.providerId);
+            delete row.providerId;
+            if (!query) return {...row, status: 'novo'}
+            if (query) return {...row, status: 'cadastrado'}
+        })
+    )
+    
+    return formatedSheet;
+}
+
+async function formatServiceSheet(sheet:Object[],id:number){
     const idSheet = sheet.map(row => ({ ...row, providerId: +id }));
     
     const formatedSheet = await Promise.all( 
@@ -39,6 +55,7 @@ function verifySchema(sheet:Object[],schema:Schema){
 
 export const excelService = {
     parseSheet,
-    formatSheet,
+    formatServiceSheet,
+    formatStockSheet,
     verifySchema
 }

@@ -5,7 +5,7 @@ export type serviceBody = Omit<createService,"providerId">;
 
 export const serviceSchema = joi.object<serviceBody>({
     code: joi.number().required(),
-    name: joi.string().min(8).required(),
+    name: joi.string().required(),
     specification: joi.string().required(),
     quantity:joi.number().required(),
 });

@@ -38,12 +38,13 @@ model Provider {
 
 model Stock {
   id            Int       @id @default(autoincrement())
-  name          String    @unique
+  name          String    
   info          String
   quantity      Int
   provider      Provider  @relation(fields: [providerId], references: [id])
   providerId    Int    
   createdAt     DateTime  @default(now())
+  @@unique([name,providerId])        
   @@map("stock") 
 }
 

@@ -57,7 +57,7 @@ async function sendFile(file,provider,token) {
         data: formData,
     }
 
-    return await baseAPI.post(`/upload/stock/${provider}`,formData,config);
+    return await baseAPI.post(`/upload/${provider}`,formData,config);
 }
 
 const api = {
