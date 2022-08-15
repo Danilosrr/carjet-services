@@ -1,15 +1,9 @@
 function formatDate(databaseDate){
-    const newDate = new Date(`${databaseDate}`);
-    if (newDate>0 == false) return;
-    const date = {
-        day: newDate.getDay(),
-        month: newDate.getMonth(),
-        year: newDate.getFullYear(),
-        hour: newDate.getHours(),
-        minute: newDate.getMinutes()
-    };
-
-    return `${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}`
+    if( typeof databaseDate == 'string'){
+        const date = databaseDate.slice(0,10);
+        const arr = date.split('-');
+        return arr[2]+'/'+arr[1]+'/'+arr[0];
+    }
 };
 
 export default formatDate;
