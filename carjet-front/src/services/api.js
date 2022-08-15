@@ -60,12 +60,19 @@ async function sendFile(file,provider,token) {
     return await baseAPI.post(`/upload/${provider}`,formData,config);
 }
 
+async function sendList(list,token) {
+    const config = requestConfig(token);
+
+    return await baseAPI.post(`database/upload`,list,config);
+}
+
 const api = {
     signUp,
     signIn,
     getBranches,
     getProviders,
     sendFile,
+    sendList,
     getServices,
     getStock,
     getProvider

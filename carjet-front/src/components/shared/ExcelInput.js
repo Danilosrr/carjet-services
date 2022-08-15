@@ -23,6 +23,19 @@ export default function ExcelInput(){
         loadPage();
     },[token])
 
+    async function importList(){
+        setLoading(true);
+        try {
+            const newList = list;
+            const format  = newList.map(row => { delete row.id; return { ...row } });
+            api.sendList(list,token);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    }
+
     async function importExcel(file){
         setLoading(true);
         try {
@@ -59,17 +72,22 @@ export default function ExcelInput(){
 
     return(
         <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} marginTop={'20px'} height={'100%'}>
-            <Box display={'flex'} gap={'10px'} flexDirection={'column'} justifyContent={'center'}>
+            <Box display={'flex'} gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
                 {!!providers?
                     <TextField select sx={{ width: '150px' }} label="estoque"  onChange={handleInputChange} value={provider}>
                             {providers.map(provider => <MenuItem key={provider.id} value={provider.id}>{provider.name}</MenuItem>)}
                     </TextField>
                 :<></>}
-                <Button sx={{gap: '10px', height: 'fit-content', marginBottom: '20px', padding: '10px'}} variant="contained" component="label" >
-                    <SiMicrosoftexcel fontSize={'26px'}/>
-                        Upload
-                    <input hidden type="file" name="table" accept=".xlsx, .xls, .csv" onChange={(e)=>{ const file = e.target.files[0]; importExcel(file) }} disabled={(loading || !provider)}/>
-                </Button>
+                <Box sx={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
+                    <Button sx={{gap: '10px', height: '40px', marginBottom: '20px', padding: '10px'}} variant="contained" component="label" >
+                        <SiMicrosoftexcel fontSize={'26px'}/>
+                            Upload
+                        <input hidden type="file" name="table" accept=".xlsx, .xls, .csv" onChange={(e)=>{ const file = e.target.files[0]; importExcel(file) }} disabled={(loading || !provider)}/>
+                    </Button>
+                    <Box hidden={!(list.length>0)}>
+                        <Button sx={{ height: '40px', marginBottom: '20px'}} variant="contained" onClick={importList}>Cadastrar</Button>
+                    </Box>
+                </Box>
             </Box>
             <Box height={'70%'} width={'100%'} >
                 {list.length>0?

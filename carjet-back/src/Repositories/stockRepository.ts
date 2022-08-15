@@ -3,8 +3,16 @@ import { prisma } from "../config/database.js";
 
 export type createStock = Omit< Stock, "id" | "createdAt">
 
-async function createStock(stock:createStock) {
-    return await prisma.stock.create({ data: stock })
+async function createUpdateStock(stock:createStock) {
+    const { name,providerId,quantity,info } = stock
+
+    return await prisma.stock.upsert({ 
+        where: { 
+            name_providerId: { name,providerId }
+        },
+        update: { quantity: { increment: quantity } },
+        create: { name,providerId,quantity,info },
+    })
 }
 
 async function updateStock(stock:createStock) {
@@ -34,7 +42,7 @@ async function findByNameProvider(name:string,providerId:number) {
 }
 
 export const stockRepository = {
-    createStock,
+    createUpdateStock,
     updateStock,
     queryByProvider,
     findByNameProvider

@@ -74,12 +74,9 @@ async function registerStockSheet(sheet:formatedStockSheet[]){
     const register = await Promise.all( 
         sheet.map( async (row) => {
             delete row.status;
-            const exists = await stockRepository.findByNameProvider(row.name,row.providerId);
-            if (exists) await stockRepository.createStock(row);
-            else await stockRepository.updateStock(row);
+            await stockRepository.createUpdateStock(row);
         })
     )
-    
     return register;
 }
 

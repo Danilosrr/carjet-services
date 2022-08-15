@@ -17,8 +17,7 @@ const providers = [
     { name:'fornecedor 4', location: {lat:-7.154532164245924, lng:-34.84883053158572}},
     { name:'fornecedor 5', location: {lat:-7.241346278412283, lng:-34.84095481120161}},
     { name:'fornecedor 6', location: {lat:-7.09610703090226, lng:-34.834260017598844}},
-    { name:'fornecedor 7', location: {lat:-7.097299454826352, lng:-34.84516051414306}},
-    { name:'fornecedor 8', location: {lat:-7.12261757851639, lng:-34.87016896619387}}
+    { name:'fornecedor 7', location: {lat:-7.097299454826352, lng:-34.84516051414306}}
 ]
 
 const stock = [
