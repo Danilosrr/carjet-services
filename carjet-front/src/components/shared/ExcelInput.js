@@ -4,9 +4,11 @@ import { SiMicrosoftexcel } from "react-icons/si";
 import { DataGrid } from '@mui/x-data-grid';
 import useAuth from "../../hooks/useAuth";
 import api from "../../services/api";
+import useAlert from "../../hooks/useAlert";
 
 export default function ExcelInput(){
     const { token } = useAuth();
+    const { setMessage } = useAlert();
     const [loading,setLoading] = useState(false);
     const [list,setList] = useState([]);
     const [column,setColumn] = useState([]);
@@ -25,19 +27,28 @@ export default function ExcelInput(){
 
     async function importList(){
         setLoading(true);
+        setMessage(null);
+
         try {
             const newList = list;
             const format  = newList.map(row => { delete row.id; return { ...row } });
             api.sendList(list,token);
             setLoading(false);
+            setMessage({ type: "success", text: "Itens cadastrados com sucesso!" });
         } catch (error) {
             console.log(error);
+            setMessage({
+                type: "error",
+                text: error.response.data,
+            });
             setLoading(false);
         }
     }
 
     async function importExcel(file){
         setLoading(true);
+        setMessage(null);
+
         try {
             const upload = await api.sendFile(file,provider,token);
             setList(createRows(upload.data));
@@ -47,6 +58,10 @@ export default function ExcelInput(){
             setLoading(false);
         } catch (error) {
             console.log(error);
+            setMessage({
+                type: "error",
+                text: error.response.data,
+            });
             setLoading(false);
         }
     }

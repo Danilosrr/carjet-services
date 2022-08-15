@@ -5,7 +5,6 @@ import { FaHandshake } from "react-icons/fa";
 import { Oval } from "react-loader-spinner";
 import styled from 'styled-components';
 import Pin from './Pin';
-import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import useAuth from '../hooks/useAuth';
 import api from '../services/api';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -67,7 +66,6 @@ export default function Map(props) {
             const { data: providers } = await api.getProviders(token);
             setProviders(providers)
         }
-        console.log(token)
         loadPage();
     }, [token,providerBtn]);
 

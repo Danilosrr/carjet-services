@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import Header from "../components/shared/Header";
+import useAlert from "../hooks/useAlert";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import formatDate from "../services/dateFormat";
@@ -10,6 +11,7 @@ import formatDate from "../services/dateFormat";
 export default function Stock(props){
     const { stock } = props
     const { token } = useAuth();
+    const { setMessage } = useAlert();
     const [loading,setLoading] = useState(false);
     const [list,setList] = useState([]);
     const [column,setColumn] = useState([]);
@@ -35,6 +37,8 @@ export default function Stock(props){
     
     async function getInfo(){
         setLoading(true);
+        setMessage(null);
+        
         try {
             if (stock) {
                 const query = await api.getStock(option,token);
@@ -54,6 +58,10 @@ export default function Stock(props){
             }
         } catch (error) {
             console.log(error);
+            setMessage({
+                type: "error",
+                text: error.response.data,
+            });
             setLoading(false);
         }
     }

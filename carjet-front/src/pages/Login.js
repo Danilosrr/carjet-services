@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "../components/shared/PasswordInput";
+import useAlert from "../hooks/useAlert";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 
@@ -15,6 +16,7 @@ import api from "../services/api";
 
 export default function Login() {
     const { signIn } = useAuth();
+    const { setMessage } = useAlert();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -28,14 +30,19 @@ export default function Login() {
     async function handleSubmit(e) {
         const { email, password } = formData;
         e.preventDefault();
+        setMessage(null);
 
         try {
             const { data: { token } } = await api.signIn({ email, password });
-            console.log(token);
             signIn(token);
             navigate("/app/home");
         } catch (error) {
             console.log(error)
+            setMessage({
+                type: "error",
+                text: error.response.data,
+            });
+            return
         }
     }
 
