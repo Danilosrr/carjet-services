@@ -1,4 +1,5 @@
 import { prisma } from "../src/config/database.js";
+import { encrypt } from "../src/Utils/encryptUtils.js";
 
 const branches = [
     { name:'filial 1', providerId:1, location: {lat:-7.1786392072688345, lng:-34.83703429614767}},
@@ -59,6 +60,13 @@ const services = [
     },
 ]
 
+const users = [
+    {
+        email: 'teste@email.com',
+        password: encrypt('senha'),
+    }
+]
+
 async function main(){
 
     await prisma.provider.createMany({
@@ -78,6 +86,11 @@ async function main(){
 
     await prisma.service.createMany({
         data: services,
+        skipDuplicates: true
+    });
+
+    await prisma.user.createMany({
+        data: users,
         skipDuplicates: true
     });
 }
