@@ -1,6 +1,7 @@
 ## Proposta
 
-    A proposta do projeto foi a criar de uma aplicação que pudesse auxiliar na verificação e no registro de planilhas de serviços e estoque em uma rede de estética automotiva.
+    A proposta do projeto foi a criar de uma aplicação que pudesse auxiliar na verificação 
+    e no registro de planilhas de serviços e estoque em uma rede de estética automotiva.
 
 ---
 
@@ -35,7 +36,7 @@ http://localhost:3000/
 
 com as informações abaixo para login.
 
-```js
+```bash
     email: teste@email.com
     senha: senha
 ```
