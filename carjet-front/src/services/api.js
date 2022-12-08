@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const baseAPI = axios.create({
-    baseURL: "https://carjet.herokuapp.com/",
+    baseURL: process.env.REACT_APP_API,
 })
 
 function requestConfig(token) {
