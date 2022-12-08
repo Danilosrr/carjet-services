@@ -3,6 +3,8 @@
 A proposta do projeto foi a criar de uma aplicação que pudesse auxiliar na verificação 
 e no registro de planilhas de serviços e estoque em uma rede de estética automotiva.
 
+<img src="carjet-front/src/assets/img/carjet.png">
+
 ---
 
 ## Ferramentas
